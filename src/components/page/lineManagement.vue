@@ -100,7 +100,7 @@
       </el-row>
         <br/>
       <el-table :data="collectorList">
-        <el-table-column property="name" label="采集器名称" width="150" ></el-table-column>
+        <el-table-column property="name" label="采集器名称" width="180" ></el-table-column>
         <el-table-column property="" label="操作" >
           <template slot-scope="scope" style="white-space:nowrap;">
             <el-button type="primary" icon="el-icon-edit-outline" size="mini" @click="editBasicBox(scope.row)">修改基本配置</el-button>
@@ -288,6 +288,7 @@
 </template>
 
 <script>
+  import { Loading } from 'element-ui';
   export default {
     name: 'lineMaçnagement',
     data() {
@@ -496,7 +497,8 @@
         _this.axios({
           method: 'post',
           url:window.config.url + "/stage/device/addConcentrator",
-          data:addLineData
+          data:addLineData,
+          headers: { "token": localStorage.getItem("token") }
         }).then((res)=>{
           if(res.data.code == 200){
             _this.$message({
@@ -772,6 +774,7 @@
 
       },
       editBasic(){
+        let loadingInstance = Loading.service({ text:"服务器玩命加载中，请稍后..." ,background:"rgba(0,0,0,0.2)" });
         let _this = this;
 
         this.recordIntervalList.forEach(v=>{
@@ -795,6 +798,7 @@
             });
             _this.editBasicFlag = false;
             this.getCollectorList(this.openConcentratorId);
+            loadingInstance.close();
           }else{
             this.$message({
               message: res.data.msg,
@@ -824,6 +828,7 @@
 
       },
       editAlarm(){
+        let loadingInstance = Loading.service({ text:"服务器玩命加载中，请稍后..." ,background:"rgba(0,0,0,0.2)" });
         let _this = this;
         this.axios({
           method: 'post',
@@ -838,6 +843,7 @@
             });
             _this.editAlarmFlag = false;
             this.getCollectorList(this.openConcentratorId);
+            loadingInstance.close();
           }else{
             this.$message({
               message: res.data.msg,

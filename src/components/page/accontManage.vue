@@ -252,7 +252,7 @@
         resetPasswardBox(row){
           this.resetPasswardFlag = true;
           this.resetPasswardId = row.id;
-          console.log(this.resetPasswardId);
+          //console.log(this.resetPasswardId);
         },
         resetPassward(){
           let _this = this;
@@ -344,7 +344,7 @@
               });
               //console.log("this.reload1");
               //_this.reload();
-              //window.location.reload();
+              window.location.reload();
               //this.$router.go(0);
               this.getAccontCheckList();
             }else{

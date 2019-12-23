@@ -7,8 +7,17 @@
           </el-tabs>
 
           <div v-show="tabType == 0">
+            <el-container>
+            <el-aside width="300px"  style="border: 1px solid #eee; padding: 10px; ">
+              <p>提示:请选择具体到采集器</p>
+              <br/>
+              <el-scrollbar style="height:700px; overflow-x: hidden; ">
+              <el-tree :props="props" :load="loadNode" :default-expand-all="true"  node-key="id" ref="treeHistoryQuerybyTable" show-checkbox lazy  @node-click="handleNodeClick" ></el-tree>
+              </el-scrollbar>
+            </el-aside>
+            <el-main>
             <el-form :inline="true" :model="historyQuerybyTable" >
-              <el-form-item label="展区">
+<!--              <el-form-item label="展区">
                 <el-select v-model="historyQuerybyTable.exhibitionAreaId" value-key="value" @change="((val)=>{getLineGroupList(val)})">
                   <el-option v-for="item in exhibitionAreaList" :key="item.id" :label="item.name" :value="item.id">
                   </el-option>
@@ -32,14 +41,14 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-              <br/>
-<!--              <el-form-item label="时间间隔">&nbsp;&nbsp;-->
-<!--                <el-radio-group   v-model="historyQuerybyTable.interval" value-key="id" @change="intervalChange">-->
-<!--                  <el-radio-button label="1" >分钟</el-radio-button>-->
-<!--                  <el-radio-button label="2" >小时</el-radio-button>-->
-<!--                  <el-radio-button label="3" >天</el-radio-button>-->
-<!--                </el-radio-group>-->
-<!--              </el-form-item>-->
+              <br/>-->
+              <el-form-item label="时间间隔">
+                <el-radio-group   v-model="historyQuerybyTable.interval" value-key="id" >
+                  <el-radio-button label="1" >分钟</el-radio-button>
+                  <el-radio-button label="2" >小时</el-radio-button>
+                  <el-radio-button label="3" >天</el-radio-button>
+                </el-radio-group>
+              </el-form-item>
               <el-form-item label="截取时间">
                 <el-date-picker v-model="historyQuerybyTable.startTime" type="datetime" placeholder="开始日期" :picker-options="pickerOptions0" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
                 <el-date-picker v-model="historyQuerybyTable.endTime" type="datetime" placeholder="结束日期" :picker-options="pickerOptions1" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
@@ -66,11 +75,21 @@
               </el-table-column>
             </el-table>
             <el-pagination background @size-change="handleSizeChangeGas" @current-change="handleCurrentChangeGas" :current-page="currentPageGas" :page-sizes="[10, 50, 100]" :page-size="pageSizeGas" layout="total, sizes, prev, pager, next, jumper" :total="totalGas"></el-pagination>
-
+            </el-main>
+            </el-container>
           </div>
           <div v-show="tabType == 1">
+            <el-container>
+              <el-aside width="300px"  style="border: 1px solid #eee; padding: 10px; ">
+                <p>提示:请选择具体到采集器</p>
+                <br/>
+                <el-scrollbar style="height:700px; overflow-x: hidden; ">
+                <el-tree :props="props" :load="loadNode" :default-expand-all="true"  node-key="id" ref="treeHistoryQuerybyChart" show-checkbox lazy  @node-click="handleNodeClick" ></el-tree>
+                </el-scrollbar>
+              </el-aside>
+              <el-main>
             <el-form :inline="true" :model="historyQuerybyChart" >
-              <el-form-item label="展区">
+   <!--           <el-form-item label="展区">
                 <el-select v-model="historyQuerybyChart.exhibitionAreaId" value-key="value" @change="((val)=>{getLineGroupList(val)})">
                   <el-option v-for="item in exhibitionAreaList" :key="item.id" :label="item.name" :value="item.id">
                   </el-option>
@@ -94,9 +113,9 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-              <br/>
-              <el-form-item label="时间间隔">&nbsp;&nbsp;
-                <el-radio-group   v-model="historyQuerybyChart.interval" value-key="id" @change="intervalChange">
+              <br/>-->
+              <el-form-item label="时间间隔">
+                <el-radio-group   v-model="historyQuerybyChart.interval" value-key="id" >
                   <el-radio-button label="1" >分钟</el-radio-button>
                   <el-radio-button label="2" >小时</el-radio-button>
                   <el-radio-button label="3" >天</el-radio-button>
@@ -112,11 +131,22 @@
                 <el-button type="primary"  @click="downloadImpByChart('gaschart')">导出图片</el-button>
               </el-form-item>
             </el-form>
-            <div ref="chartGas" id="gaschart" :style="{width: '1200px', height: '400px'}"></div>
+            <div ref="chartGas" id="gaschart" :style="{width: '100%', height: '600px'}"></div>
+              </el-main>
+            </el-container>
           </div>
           <div v-show="tabType == 2">
+            <el-container>
+              <el-aside width="300px"  style="border: 1px solid #eee; padding: 10px; ">
+                <p>提示:请选择具体到采集器</p>
+                <br/>
+                <el-scrollbar style="height:700px; overflow-x: hidden; ">
+                <el-tree :props="props" :load="loadNode" :default-expand-all="true"  node-key="id" ref="treeHistoryAlarm" show-checkbox lazy  @node-click="handleNodeClick" ></el-tree>
+                </el-scrollbar>
+              </el-aside>
+              <el-main>
             <el-form :inline="true" :model="historyAlarm" >
-              <el-form-item label="展区">
+             <!-- <el-form-item label="展区">
                 <el-select v-model="historyAlarm.exhibitionAreaId" value-key="value" @change="((val)=>{getLineGroupList(val)})">
                   <el-option v-for="item in exhibitionAreaList" :key="item.id" :label="item.name" :value="item.id">
                   </el-option>
@@ -139,9 +169,15 @@
                   <el-option v-for="item in gasCollectorList" :key="item.id" :label="item.name" :value="item.id">
                   </el-option>
                 </el-select>
+              </el-form-item>-->
+              <el-form-item label="时间间隔">
+                <el-radio-group   v-model="historyAlarm.interval" value-key="id" >
+                  <el-radio-button label="1" >分钟</el-radio-button>
+                  <el-radio-button label="2" >小时</el-radio-button>
+                  <el-radio-button label="3" >天</el-radio-button>
+                </el-radio-group>
               </el-form-item>
               <el-form-item label="截取时间">
-                <!--<el-date-picker  v-model="historyQuerybyTable.date" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>-->
                 <el-date-picker v-model="historyAlarm.startTime" type="datetime" placeholder="开始日期" :picker-options="pickerOptions0" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
                 <el-date-picker v-model="historyAlarm.endTime" type="datetime" placeholder="结束日期" :picker-options="pickerOptions1" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
               </el-form-item>
@@ -156,7 +192,8 @@
               <el-table-column prop="temperature" label="ppm" min-width="180"></el-table-column>
             </el-table>
             <el-pagination background @size-change="handleSizeChangeAlarmGas" @current-change="handleCurrentChangeAlarmGas" :current-page="currentPageAlarmGas" :page-sizes="[10, 50, 100]" :page-size="pageSizeAlarmGas" layout="total, sizes, prev, pager, next, jumper" :total="totalAlarmGas"></el-pagination>
-
+              </el-main>
+            </el-container>
           </div>
   </div>
 </template>
@@ -196,6 +233,7 @@
             lineGroupId:'',
             concentratorId:'',
             gasCollectorId:'',
+            interval:'2',
             startTime:'',
             endTime:this.getCurrentDate(),
             alarm:true,
@@ -219,6 +257,24 @@
           currentPageAlarmGas: 1,
           ascAlarmGas:true,
           columnAlarmGas:'',
+
+
+          defaultProps: {
+            children: 'children',
+            label: 'label'
+          },
+
+          props: {
+            label: "name",//这里是树结构中需显示的数据（即接口返回的需展示在页面上的参数）
+            children: [],
+            isLeaf: (data, node) => {
+              if (node.level === 4) {
+                // 第四层没有下一级节点
+                return true
+              }
+            }
+
+          },
 
           rangeDay:30,
           pickerOptions0: {
@@ -305,6 +361,83 @@
           return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
         },
 
+        loadNode (node, resolve) {
+          if (node.level === 0) {
+            this.getOneData(resolve)
+          }else if (node.level === 1) {
+            this.getTwoData(node, resolve)
+          }else if (node.level === 2) {
+            this.getThreeData(node, resolve)
+          }else if (node.level === 3) {
+            this.getFourData(node, resolve)
+          }else{
+            resolve([]);
+          }
+        },
+        handleNodeClick(data){
+          //console.log( data);
+        },
+
+        getOneData(resolve){
+          let _this = this;
+          _this.axios({
+            method: 'get',
+            url: window.config.url + "/stage/device/getExhibitionAreaDropDownList",
+            headers: {"token": localStorage.getItem("token")}
+          }).then(function (res) {
+            //console.log(res);
+            //_this.treeData = res.data.data;
+            //_this.exhibitionAreaList = res.data.data;
+            resolve(res.data.data);
+          }).catch(function (error) {
+            console.log(error);
+          });
+
+        },
+        getTwoData(node,resolve){
+          let  _this = this;
+          _this.axios({
+            method: 'get',
+            url:window.config.url + "/stage/device/getLineGroupDropDownList",
+            params:{exhibitionAreaId:node.data.id},
+            headers:{ "token":localStorage.getItem("token") }
+          }).then((res)=>{
+            //console.log(res);
+            resolve(res.data.data);
+          }).catch(function (error) {
+            console.log(error);
+          });
+
+        },
+        getThreeData(node,resolve){
+          let  _this = this;
+          this.axios({
+            method: 'get',
+            url: window.config.url + "/stage/device/getConcentratorDropDownList",
+            params: {lineGroupId: node.data.id},
+            headers: {"token": localStorage.getItem("token")}
+          }).then(function (res) {
+            //console.log(res);
+            resolve(res.data.data)
+          }).catch(function (error) {
+            console.log(error);
+          });
+        },
+        getFourData(node,resolve){
+          let  _this = this;
+          this.axios({
+            method: 'get',
+            url: window.config.url + "/stage/device/getGasCollectorDropDownList",
+            params: {concentratorId: node.data.id},
+            headers: {"token": localStorage.getItem("token")}
+          }).then(function (res) {
+            //console.log(res);
+            resolve(res.data.data)
+          }).catch(function (error) {
+            console.log(error);
+          });
+        },
+
         getExhibitionAreaList(){
           let _this = this;
           this.axios({
@@ -382,13 +515,14 @@
           let _this = this;
 
           var queryTableData = {
-            exhibitionAreaId:_this.historyQuerybyTable.exhibitionAreaId,
-            lineGroupId:_this.historyQuerybyTable.lineGroupId,
-            concentratorId:_this.historyQuerybyTable.concentratorId,
-            collectorId: _this.historyQuerybyTable.gasCollectorId,
+            // exhibitionAreaId:_this.historyQuerybyTable.exhibitionAreaId,
+            // lineGroupId:_this.historyQuerybyTable.lineGroupId,
+            // concentratorId:_this.historyQuerybyTable.concentratorId,
+            // collectorId: _this.historyQuerybyTable.gasCollectorId,
             start: _this.historyQuerybyTable.startTime,
             end: _this.historyQuerybyTable.endTime,
             queryAlarm:_this.historyQuerybyTable.alarm,
+            unit:_this.historyQuerybyTable.interval,
             current:_this.currentPageGas,
             size:_this.pageSizeGas,
             orders:[{
@@ -410,6 +544,24 @@
           // var myConcentrator = this.concentratorList.find(x => x.id == _this.concentratorId);
           // var myLineGroup = this.lineGroupList.find(x => x.id == _this.lineGroupId);
           // var myExhibitionArea= this.exhibitionAreaList.find(x => x.id == _this.exhibitionAreaId);
+
+          var treeArr = this.$refs.treeHistoryQuerybyTable.getCheckedNodes();
+          var exhibitionAreaArr=[],lineGroupArr=[],concentratorArr=[],collectorArr =[];
+          treeArr.map(item => {
+            if(item.concentratorId){
+              collectorArr.push(item.id)
+            }else if(item.lineGroupId){
+              concentratorArr.push(item.id)
+            }else if(item.exhibitionAreaId){
+              lineGroupArr.push(item.id)
+            }else{
+              exhibitionAreaArr.push(item.id)
+            }
+          })
+          queryTableData.exhibitionAreaId = exhibitionAreaArr;
+          queryTableData.lineGroupId = lineGroupArr;
+          queryTableData.concentratorId = concentratorArr;
+          queryTableData.collectorId = collectorArr;
 
           _this.axios({
             method: 'post',
@@ -465,13 +617,14 @@
           let _this = this;
 
           var queryAlarmTableData = {
-            exhibitionAreaId:_this.historyAlarm.exhibitionAreaId,
-            lineGroupId:_this.historyAlarm.lineGroupId,
-            concentratorId:_this.historyAlarm.concentratorId,
-            collectorId: _this.historyAlarm.gasCollectorId,
+            // exhibitionAreaId:_this.historyAlarm.exhibitionAreaId,
+            // lineGroupId:_this.historyAlarm.lineGroupId,
+            // concentratorId:_this.historyAlarm.concentratorId,
+            // collectorId: _this.historyAlarm.gasCollectorId,
             start: _this.historyAlarm.startTime,
             end: _this.historyAlarm.endTime,
             queryAlarm:_this.historyAlarm.alarm,
+            unit:_this.historyAlarm.interval,
             current:_this.currentPageAlarmGas,
             size:_this.pageSizeAlarmGas,
             orders:[{
@@ -492,6 +645,25 @@
           // var myConcentrator = this.concentratorList.find(x => x.id == _this.concentratorId);
           // var myLineGroup = this.lineGroupList.find(x => x.id == _this.lineGroupId);
           // var myExhibitionArea= this.exhibitionAreaList.find(x => x.id == _this.exhibitionAreaId);
+
+          var treeArr = this.$refs.treeHistoryAlarm.getCheckedNodes();
+          var exhibitionAreaArr=[],lineGroupArr=[],concentratorArr=[],collectorArr =[];
+          treeArr.map(item => {
+            if(item.concentratorId){
+              collectorArr.push(item.id)
+            }else if(item.lineGroupId){
+              concentratorArr.push(item.id)
+            }else if(item.exhibitionAreaId){
+              lineGroupArr.push(item.id)
+            }else{
+              exhibitionAreaArr.push(item.id)
+            }
+          })
+          queryAlarmTableData.exhibitionAreaId = exhibitionAreaArr;
+          queryAlarmTableData.lineGroupId = lineGroupArr;
+          queryAlarmTableData.concentratorId = concentratorArr;
+          queryAlarmTableData.collectorId = collectorArr;
+
           _this.axios({
             method: 'post',
             url:window.config.url + "/stage/data/getGasCollectorRecordList",
@@ -538,16 +710,17 @@
           let _this = this;
 
           var queryTableData = {
-            exhibitionAreaId:_this.historyQuerybyTable.exhibitionAreaId,
-            concentratorId: _this.historyQuerybyTable.concentratorId,
-            lineGroupId: _this.historyQuerybyTable.lineGroupId,
-            concentratorId: _this.historyQuerybyTable.concentratorId,
+            // exhibitionAreaId:_this.historyQuerybyTable.exhibitionAreaId,
+            // concentratorId: _this.historyQuerybyTable.concentratorId,
+            // lineGroupId: _this.historyQuerybyTable.lineGroupId,
+            // concentratorId: _this.historyQuerybyTable.concentratorId,
             collectorId: _this.historyQuerybyTable.gasCollectorId,
             start: _this.historyQuerybyTable.startTime,
             end: _this.historyQuerybyTable.endTime,
+            unit:_this.historyQuerybyTable.interval,
             queryAlarm:_this.historyQuerybyTable.alarm,
           };
-          console.log(queryTableData);
+          //console.log(queryTableData);
           for (var i in queryTableData) {
             if( queryTableData[i] === '') {
               _this.$message({
@@ -557,6 +730,23 @@
               break;
             }
           };
+          var treeArr = this.$refs.treeHistoryQuerybyTable.getCheckedNodes();
+          var exhibitionAreaArr=[],lineGroupArr=[],concentratorArr=[],collectorArr =[];
+          treeArr.map(item => {
+            if(item.concentratorId){
+              collectorArr.push(item.id)
+            }else if(item.lineGroupId){
+              concentratorArr.push(item.id)
+            }else if(item.exhibitionAreaId){
+              lineGroupArr.push(item.id)
+            }else{
+              exhibitionAreaArr.push(item.id)
+            }
+          })
+          queryTableData.exhibitionAreaId = exhibitionAreaArr;
+          queryTableData.lineGroupId = lineGroupArr;
+          queryTableData.concentratorId = concentratorArr;
+          queryTableData.collectorId = collectorArr;
 
           _this.axios({
             headers:{ "token":localStorage.getItem("token") },
@@ -565,19 +755,26 @@
             data:queryTableData,
             responseType: 'blob',
           }).then((res)=>{
-            var blob = new Blob([res.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'}); //application/vnd.openxmlformats-officedocument.spreadsheetml.sheet这里表示xlsx类型
-            var downloadElement = document.createElement('a');
-            var href = window.URL.createObjectURL(blob); //创建下载的链接
-            downloadElement.href = href;
-            //downloadElement.download = '温湿度记录表.xlsx'; //下载后文件名
-            document.body.appendChild(downloadElement);
-            downloadElement.click(); //点击下载
-            document.body.removeChild(downloadElement); //下载完成移除元素
-            window.URL.revokeObjectURL(href); //释放掉blob对象
-            _this.$message({
-              message: "下载成功",
-              type: 'success'
-            });
+            if(res.data.type == "application/json"){
+              _this.$message({
+                message: "采集器Id不能为空",
+                type: 'warning'
+              });
+            }else if(res.data.type == "application/force-download") {
+              var blob = new Blob([res.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'}); //application/vnd.openxmlformats-officedocument.spreadsheetml.sheet这里表示xlsx类型
+              var downloadElement = document.createElement('a');
+              var href = window.URL.createObjectURL(blob); //创建下载的链接
+              downloadElement.href = href;
+              //downloadElement.download = '温湿度记录表.xlsx'; //下载后文件名
+              document.body.appendChild(downloadElement);
+              downloadElement.click(); //点击下载
+              document.body.removeChild(downloadElement); //下载完成移除元素
+              window.URL.revokeObjectURL(href); //释放掉blob对象
+              _this.$message({
+                message: "下载成功",
+                type: 'success'
+              });
+            }
 
           }).catch(function (error) {
             console.log(error);
@@ -626,21 +823,60 @@
           this.queryAlarmTableGas();
         },
 
+        getTimePotArr(){
+          var unitTime =0;
+          var startTime=this.historyQuerybyChart.startTime.split(/[- : \/]/);
+          var endTime=this.historyQuerybyChart.endTime.split(/[- : \/]/);
+
+          if(this.historyQuerybyChart.interval == "1"){
+            unitTime = 15 * 60 * 1000;
+            if(startTime[4] >= 0 && startTime[4]< 15){
+              startTime[4]= "00"
+            }else if(startTime[4] >= 15 && startTime[4]< 30){
+              startTime[4]= "15"
+            }else if(startTime[4] >= 30 && startTime[4]< 45){
+              startTime[4]= "30"
+            }else if(startTime[4] >= 45 && startTime[4]< 59){
+              startTime[4]= "45"
+            }
+          }else if(this.historyQuerybyChart.interval == "2" ){
+            unitTime = 60 * 60 * 1000;
+            startTime[4] = "00";
+          }else if(this.historyQuerybyChart.interval == "3"){
+            unitTime = 24 * 60 * 60 * 1000;
+
+            startTime[4] = "00";
+            startTime[3] = "00";
+          }
+          //console.log(startTime);
+          var startDate = Date.parse(new Date(startTime[0], startTime[1]-1, startTime[2], startTime[3], startTime[4], startTime[5]));
+          var endDate = Date.parse(new Date(endTime[0], endTime[1]-1, endTime[2], endTime[3], endTime[4], endTime[5]));
+          //console.log(startDate);
+          //console.log(endDate);
+
+          var timePotArr=[];
+          for(let  timePot = startDate; timePot <= endDate; timePot = timePot + unitTime){
+            timePotArr.push(this.datetimeFormat(timePot));
+          }
+          //console.log(timePotArr);
+          return timePotArr;
+        },
         /*请求历史曲线数据*/
         queryChart(){
 
           let _this = this;
 
           let queryChartData = {
-            exhibitionAreaId:_this.historyQuerybyChart.exhibitionAreaId,
-            lineGroupId:_this.historyQuerybyChart.lineGroupId,
-            concentratorId:_this.historyQuerybyChart.concentratorId,
-            collectorId:_this.historyQuerybyChart.gasCollectorId,
+            // exhibitionAreaId:_this.historyQuerybyChart.exhibitionAreaId,
+            // lineGroupId:_this.historyQuerybyChart.lineGroupId,
+            // concentratorId:_this.historyQuerybyChart.concentratorId,
+            // collectorId:_this.historyQuerybyChart.gasCollectorId,
             start:_this.historyQuerybyChart.startTime,
             end:_this.historyQuerybyChart.endTime,
             unit:_this.historyQuerybyChart.interval,
+            "isGas": true,
           };
-          console.log(queryChartData);
+          //console.log(queryChartData);
           for (var i in queryChartData) {
             if( queryChartData[i] === '') {
               _this.$message({
@@ -650,6 +886,24 @@
               return false;
             }
           };
+          var treeArr = this.$refs.treeHistoryQuerybyChart.getCheckedNodes();
+          var exhibitionAreaArr=[],lineGroupArr=[],concentratorArr=[],collectorArr =[];
+          treeArr.map(item => {
+            if(item.concentratorId){
+              collectorArr.push(item.id)
+            }else if(item.lineGroupId){
+              concentratorArr.push(item.id)
+            }else if(item.exhibitionAreaId){
+              lineGroupArr.push(item.id)
+            }else{
+              exhibitionAreaArr.push(item.id)
+            }
+          })
+          // queryChartData.exhibitionAreaId = exhibitionAreaArr;
+          // queryChartData.lineGroupId = lineGroupArr;
+          // queryChartData.concentratorId = concentratorArr;
+          queryChartData.collectorId = collectorArr;
+
           _this.axios({
             method: 'post',
             url:window.config.url + "/stage/data/getCollectorRecordDto",
@@ -658,8 +912,49 @@
           }).then((res)=>{
             //console.log(res);
             if(res.data.code == 200){
-              //console.log(res);
-                _this.inithistoryGasQuerybyChart(res.data.data);
+
+              var chartData = res.data.data;
+              //console.log("chartData");
+              //console.log(chartData);
+
+              var lengthArr=[], maxLength = chartData[0].collectorList.length, maxLengthIndex=0,maxLengthArr=[], num = 0, num2 = 0;
+              var recordingTimeaArr =[]
+              recordingTimeaArr= this.getTimePotArr();
+
+              for(let i=0; i < chartData.length; i++){
+                maxLengthArr.push({
+                  collectorList:[]
+                })
+                for(let j=0; j < recordingTimeaArr.length; j++){
+                  maxLengthArr[i].collectorList.push({
+                    name:"",
+                    temperature:"",
+                    recordingTime:recordingTimeaArr[j],
+                    type:"",
+                  })
+                  num2++
+                }
+              }
+              //console.log(maxLengthArr)
+              for(let i=0; i < chartData.length; i++){
+                for(let j=0; j < chartData[i].collectorList.length; j++){
+
+                    for(let s=0; s < maxLengthArr[i].collectorList.length; s++){
+                      maxLengthArr[i].collectorList[s].name = chartData[i].collectorList[0].name;
+                      maxLengthArr[i].collectorList[s].type = chartData[i].collectorList[0].type;
+                      if(maxLengthArr[i].collectorList[s].recordingTime == chartData[i].collectorList[j].recordingTime){
+                        maxLengthArr[i].collectorList[s].temperature = chartData[i].collectorList[j].temperature;
+                      }
+                    }
+                }
+                chartData[i].collectorList = maxLengthArr[i].collectorList;
+              }
+                //console.log(maxLengthArr)
+
+
+
+
+              _this.inithistoryGasQuerybyChart(maxLengthArr);
 
             }else{
               _this.$message({
@@ -669,74 +964,117 @@
             }
           }).catch(function (error) {
             console.log(error);
+
           });
         },
 
 
         /*绘制gas历史曲线图*/
         inithistoryGasQuerybyChart(json) {
-          console.log(json)
-          let  temperatureArr = [], recordingTimeArr = [];
+          //console.log(json)
+          var arr = [] , recordingTimeArr =  [] ,arr1=[], num = 0 ,Arr = [],seriesArr = [],collectorArr = [], num2 = 0;
           json.forEach((value, index) => {
-            //humidityArr.push(value.humidity);
-            temperatureArr.push(value.temperature);
-            recordingTimeArr.push(value.recordingTime);
+            collectorArr.push(value.collectorList[0].name)
+          })
+          console.log(collectorArr);
+
+          for(let i=0;i<json[0].collectorList.length;i++){
+            recordingTimeArr.push(json[0].collectorList[i].recordingTime)
+          }
+          //console.log(recordingTimeArr)
+
+          for(let i=0;i<json.length;i++){
+
+            Arr.push({
+              arr1:{
+                name:json[i].collectorList[0].name,
+                type:'line',
+                data:[]
+              }
+            })
+            for(let j=0;j<json[i].collectorList.length;j++){
+              Arr[i].arr1.data.push(
+                json[i].collectorList[j].temperature
+              )
+            }
+            num++
+          }
+          let that = this
+          var time2 = setInterval(function() {
+            if(num == json.length){
+              for (let t = 0; t < Arr.length; t++) {
+                seriesArr.push(Arr[t].arr1);
+                num2++
+              }
+              //console.log(seriesArr)
+              clearInterval(time2)
+            }
           })
 
-          let myChart = this.$echarts.init(this.$refs.chartGas);
-
-          // 绘制图表
-          myChart.setOption({
-            tooltip: {
-              trigger: 'axis',
-              axisPointer: {
-                type: 'cross',
-                crossStyle: {
-                  color: '#999'
-                }
-              }
-            },
-
-            grid:{
-              bottom:"20%" //
-            },
-
-            xAxis: [
-              {
-                type: 'category',
-                data: recordingTimeArr,
-                axisPointer: {
-                  type: 'shadow'
-                },
-                axisLabel: {
-                  interval: 3,
-                  formatter:function(value) {
-                    return value.split(" ").join("\n");
+          var time3 = setInterval(function(){
+            if(num2 == Arr.length){
+              let myChart = that.$echarts.init(that.$refs.chartGas);
+                  // 绘制图表
+              myChart.setOption({
+                tooltip: {
+                  trigger: 'axis',
+                  axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                      color: '#999'
+                    }
                   }
-                }
-              }
-            ],
-            yAxis: [
-              {
-                type: 'value',
-                name: '有害气体',
-                // min: 0,
-                // max: 50,
-                //interval: 5,
-                axisLabel: {
-                  formatter: '{value} ppm'
-                }
-              }
-            ],
-            series: [
-              {
-                name:'有害气体',
-                type:'line',
-                //yAxisIndex: 1,
-                data:temperatureArr
-              }
-            ]
-          });
+                },
+                legend: {
+                  data:collectorArr
+                },
+                grid: [{
+                  top:'15%',
+                  left: 50,
+                  right: 10,
+                  bottom:100
+                }],
+                xAxis: [
+                  {
+                    type: 'category',
+                    data: recordingTimeArr,
+                    axisPointer: { type: 'shadow' },
+                    axisLabel: {
+                      interval: 3,
+                      formatter:function(value) {
+                        return value.split(" ").join("\n");
+                      }
+                    }
+                  }
+                ],
+                yAxis: [
+                  {
+                    type: 'value',
+                    name: '有害气体',
+                    // min: 0,
+                    // max: 50,
+                    //interval: 5,
+                    axisLabel: {
+                      formatter: '{value} ppm'
+                    }
+                  }
+                ],
+                dataZoom: [
+                  {
+                    show: true,
+                  },
+                  {
+                    type: 'inside',
+                  },
+
+                ],
+                series: seriesArr
+              });
+
+              clearInterval(time3)
+
+            }
+          })
 
         },
 
@@ -753,7 +1091,7 @@
           });
           var $a = document.createElement('a');
           var type = 'png';
-          $a.download = '温湿度折线图.' + type;
+          $a.download = '有害气体折线图.' + type;
           $a.target = '_blank';
           $a.href = url;
           // Chrome and Firefox

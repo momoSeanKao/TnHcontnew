@@ -173,7 +173,7 @@
                 message: "修改成功",
                 type: 'success'
               });
-              this.addAccontFlag = false;
+              this.editPasswardFlag = false;
             }else{
               _this.$message({
                 message: res.data.msg,
